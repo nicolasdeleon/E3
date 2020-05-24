@@ -1,0 +1,727 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language french
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Ejercicio 8
+\end_layout
+
+\begin_layout Standard
+Se busco utilizar un circuito que pudiera tomar la salida de un sensor de
+ distancia, en este caso HC-SR04, la cual viene dada en un pulso de micro
+ segundos y establecer una salida binaria acorde a la medición realizada.
+ Se planteo el siguiente circuito el cual analizaremos por partes a continuación
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename LogicDiagram.jpg
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Circuito Lógico Implementado
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+*La salida del flipflop indica un triple AND con las señales de Enable y
+ External Trigger.
+\end_layout
+
+\begin_layout Standard
+Tener en cuenta que en el diseño se considero un regulador de voltage para
+ poder utilizar baterias de 
+\begin_inset Formula $9V$
+\end_inset
+
+ de manera tal que esta tension es convertida a 
+\begin_inset Formula $5V$
+\end_inset
+
+.
+ Tambien se utilizaron leds rojos para detectar las salidas del contador
+ y un led para notar que se podia comenzar a medir nuevamente.
+ Al estar apagado el led se nota que hay una medicion lista por lo que es
+ necesario resetearla para volver a medir.
+ 
+\end_layout
+
+\begin_layout Subsection
+Etapa de Entrada
+\end_layout
+
+\begin_layout Standard
+Se coloco un siwtch de enable, el cual con una resistencia de puldown asegure
+ que al estar en abierto al bloque de AND conformado por las NANDS, independient
+emente de cual sea el valor del trigger externo nos coloque una entrada
+ en 
+\begin_inset Formula $0V$
+\end_inset
+
+.
+ Considerando el switch Enable cerrado, ahora el circuito reacciona ante
+ el External Trigger.
+ Se colocaron una resistencia y un capacitor como sistema de debounce.
+ Cuando se presenta el pico de 
+\begin_inset Formula $5V$
+\end_inset
+
+, de tener altos y bajos entre 
+\begin_inset Formula $0V$
+\end_inset
+
+ y
+\begin_inset Formula $5V$
+\end_inset
+
+ que caigan dentro del tiempo 
+\begin_inset Formula $\tau=R*C$
+\end_inset
+
+ del sistema, son absorbidos por la carga del capacitor y se ve una curva
+ parecida a la caracteristica de la carga de un 
+\begin_inset Formula $RC$
+\end_inset
+
+.
+ Luego al soltar el External Trigger, el capacitor comienza a descargarse
+ y los picos de 
+\begin_inset Formula $0V$
+\end_inset
+
+ a 
+\begin_inset Formula $5V$
+\end_inset
+
+ provocados por el bounce del boton son nuevamnete absoribidos por el sistema
+ y se ve una caida de 
+\begin_inset Formula $5V$
+\end_inset
+
+ a 
+\begin_inset Formula $0V$
+\end_inset
+
+ caracteristica de la descarga del 
+\begin_inset Formula $RC$
+\end_inset
+
+.
+ Por otra parte al trabajar con compuertas Schmitt Triger nos aseguramos
+ que en la zona de transicion de 
+\begin_inset Formula $0V$
+\end_inset
+
+ a 
+\begin_inset Formula $5V$
+\end_inset
+
+ provocada por el RC de debounce nos permanezcamos a salvo dentro de los
+ margenes donde la señal es consideradada 0 para luego en el periodo de
+ descarga notar un comportamiento similar solo que permaneciendo en 1 a
+ lo largo de la caida hasta el 0.
+ Se observa entonces una perfecta salida de un pulso a la salida del bloque
+ AND armado con NANDS.
+ 
+\end_layout
+
+\begin_layout Standard
+Por otra parte la salida del bloque AND es interconectada con otro bloque
+ AND tambien generado con NANDS con la salida negada de un flipflop de tipo
+ D, el cual almacena un 1 en el caso de que el clock lo habilite, y solo
+ se coloca en 0 si se lo resetea Low to High externamente.
+ Realimentando así la señal de salida de los bloques al clock del flipflop
+ se puede armar una manera de evitar el retriggering conectando la salida
+ negada del flipflop al ultimo bloque AND.
+ Por otra parte externamente una vez terminado de medir se puede resetear
+ externamente el flip flop habilitando nuevamente la tomada de mediciones.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename EtapaDeEntrada.jpg
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Circuito Lógico De Entrada
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Generador del Pulso
+\end_layout
+
+\begin_layout Standard
+Se busco la forma de generar un pulso de un determinado tiempo controlado
+ internamente por el circuito, para de esta manera asegurarse que al sensor
+ se lo estaba excitando con 
+\begin_inset Formula $10us$
+\end_inset
+
+ lo cual informa el fabricante que es lo mínimo que genera el trigger.
+ Por otra parte es necesario que el Trigger del 555 sea mayor a 
+\begin_inset Formula $1,2us$
+\end_inset
+
+ (tomado como parámetro en la hoja de datos del fabricante) y es indicado
+ que debe ser menor al pulso generado por el 555 en configuración mono estable.
+ Se indica el periodo del pulso como 
+\begin_inset Formula $t=1.1*R_{A}*C$
+\end_inset
+
+ donde se busco generar un pulso de entre 
+\begin_inset Formula $10us$
+\end_inset
+
+ y 
+\begin_inset Formula $15us$
+\end_inset
+
+ para triggerear el sensor, por lo que se busco un pulso de 
+\begin_inset Formula $10us$
+\end_inset
+
+ para triggerear el 555.
+ Para esto recordando que al sistema llega un pulso generado por el External
+ Trigger de longitud variable, se lo recorto con un circuito RC.
+ Dado la configuración del RC sobre la resistencia comienzan inicialmente
+ a caer los 
+\begin_inset Formula $5V$
+\end_inset
+
+ hasta que se carga el capacitor dado por el tiempo característico 
+\begin_inset Formula $\tau=R*C$
+\end_inset
+
+ donde la caída de tensión sobre la resistencia es nula.
+ De esta manera se recorto la señal de tiempo arbitrario a 
+\begin_inset Formula $10us$
+\end_inset
+
+ con componentes de 
+\begin_inset Formula $10nF$
+\end_inset
+
+ y 
+\begin_inset Formula $1K\Omega$
+\end_inset
+
+.
+ Por otra parte se puede ver que al pasar el pulso, para evitar la descarga
+ del capacitor por esa resistencia generando un pulso negativo, se coloco
+ un diodo shotckey para contrarrestar este fenómeno, teniendo en cuenta
+ que la tecnología permite la menor caída de potencial a comparación otros
+ diodos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename GeneradorDePulso.jpg
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Circuito Lógico Generador de Pulso
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename RC_CortaSeñal.gif
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Funcionamiento RC
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename 555Monoestable.jpeg
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Configuración Monoestable del 555
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Generador del Clock
+\end_layout
+
+\begin_layout Standard
+El clock implementado fue exclusivo para ser utilizado por el contador de
+ manera tal que por cada flanco descendiente del clock se tome una unidad
+ de medición.
+ Se considero acorde tomar entonces un clock que permitiera, con una salida
+ de 8bits generar la medición máxima acorde a 
+\begin_inset Formula $400cm$
+\end_inset
+
+ (lo máximo que puede medir el sensor).
+ Dado que el sensor especificado por el fabricante devuelve un pulso dado
+ por la relación 
+\begin_inset Formula $cm=uS/58$
+\end_inset
+
+, se busco el pulso máximo bajo 
+\begin_inset Formula $400cm$
+\end_inset
+
+ de 
+\begin_inset Formula $23200us$
+\end_inset
+
+ y luego un clock que permitiera 255 flancos descendientes en esa longitud
+ de tiempo.
+ Esto llevo a un clock de 
+\begin_inset Formula $90us$
+\end_inset
+
+ y dando la medición mínima del sensor de 
+\begin_inset Formula $2cm$
+\end_inset
+
+ en un poco mas de un clock aproximadamente 
+\begin_inset Formula $1.3Clocks$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Por otra parte la configuración aestable del 555 permite bajo ciertas considerac
+iones realizar este clock.
+ El fabricante indica la relación del periodo 
+\begin_inset Formula $T=t1+t2=0.693(R_{A}+2R_{B})C$
+\end_inset
+
+ donde el DutyCicle queda definido como 
+\begin_inset Formula $D=R_{B}/R_{A}+2R_{B}.$
+\end_inset
+
+ Observar que de tomar una resistencia 
+\begin_inset Formula $R_{B}$
+\end_inset
+
+ mucho mayor a 
+\begin_inset Formula $R_{A}$
+\end_inset
+
+ se puede conseguir una simetría en el duty cycle del 
+\begin_inset Formula $50\%$
+\end_inset
+
+.
+ Teniendo en cuenta esto se tomaron valores 
+\begin_inset Formula $R_{A}=12K\Omega$
+\end_inset
+
+, 
+\begin_inset Formula $R_{B}=120K\Omega$
+\end_inset
+
+, y un equivalente en paralelo 
+\begin_inset Formula $C_{eq}=517pF$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename 555Aestable.jpeg
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Configuración Aestable del 555
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Clock Medido.png
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Clock Generado
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Contador
+\end_layout
+
+\begin_layout Standard
+Se conecto la salida del clock anterior con la salida del pulso echo del
+ sensor a un bloque AND y se conecto con la entrada clock del contador.
+ Teniendo en cuenta que el contador utilizado 74HC4040 opera con flancos
+ descendientes de cada clock, al colocar esta señal se consigue una operación
+ por cada clock mientras que echo este en 1.
+ Así medimos la longitud del pulso en clocks, que por como se hicieron las
+ cuentas se puede asociar a la distancia la cual midió el sensor.
+ Una señal de reset externa también es colocada en el MasterReset del contador
+ para poder borrar mediciones anteriores cada vez que uno va a generar una
+ nueva.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Contador.jpg
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Configuración del Contador
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Anexo
+\end_layout
+
+\begin_layout Standard
+Hojas de Datos de los Fabricantes
+\end_layout
+
+\begin_layout Standard
+http://pdf1.alldatasheet.com/datasheet-pdf/view/26897/TI/CD4093.html
+\end_layout
+
+\begin_layout Standard
+http://pdf1.alldatasheet.com/datasheet-pdf/view/15607/PHILIPS/74HC4040.html
+\end_layout
+
+\begin_layout Standard
+http://pdf1.alldatasheet.com/datasheet-pdf/view/791941/TI1/LM555.html
+\end_layout
+
+\begin_layout Standard
+http://pdf1.alldatasheet.com/datasheet-pdf/view/17676/PHILIPS/HEF4013BP.html
+\end_layout
+
+\begin_layout Standard
+Foto del Esquemático
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename FotoEsquematico.jpeg
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Foto del Esquematico
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

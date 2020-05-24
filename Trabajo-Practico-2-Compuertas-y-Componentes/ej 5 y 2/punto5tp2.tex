@@ -1,0 +1,262 @@
+%% LyX 2.3.0 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[spanish]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=4cm,lmargin=2cm,rmargin=2cm,headheight=2cm,headsep=2cm,footskip=2cm}
+\usepackage{array}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{graphicx}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+\makeatother
+
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>}}
+
+\begin{document}
+
+\section{Ejercicio 2}
+
+\subsection{Introducción}
+
+Las compuertas lógicas discretas, vienen ensambladas en diversos encapsulados.
+Constructivamente, existen varias tecnologías para realizar dichos
+componentes. La finalidad de este punto en particular, va a ser comparar
+las tecnologías TTL y las CMOS.
+
+\subsubsection{Tecnología TTL}
+
+Transistor-Transistor Logic, por sus siglas en inglés, es una tecnología
+de construcción de circuitos integrados electrónicos digitales basada
+en el uso de transistores bipolares, generalmente de uso de transistores
+multiemisores. TTL sucedió a las tecnologías RTL (lógica resistencia-transistor)
+y DTL (lógica diodo-transistor).
+
+\subsubsection{Tecnología CMOS}
+
+Compuertas CMOS o MOS Complementarias. (Complementary Metal-Oxide
+Semiconductor), similares a la tecnología TTL, solo que se reemplazan
+los capacitores BJT por los capacitores de tipo P-MOS o N-MOS. Esta
+diferencia constructiva, va a ocasionar diferencias en su funcionamiento
+las cuales se compararán a continuación.
+
+\subsection{Análisis de las tecnologías}
+
+\subsubsection{Rango de operación y rangos de Validez.}
+
+Procederemos a comparar la tensión a la cual cada integrado es capaz
+de funcionar:
+
+\begin{table}[H]
+\centering{}%
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+Tecnologías & TTL & TTL (medido) & CMOS & CMOS medido\tabularnewline
+\hline 
+\hline 
+Tensión Recomendada & 5 V & - & 5 V & -\tabularnewline
+\hline 
+Tensión mínima de funcionamiento & 4.75 V & 1.6 & 2V & 1.6\tabularnewline
+\hline 
+Tensión máxima de funcionamiento & 5.25 V & 5.5 & 6V & 6.5\tabularnewline
+\hline 
+\end{tabular}\caption{Contrastación de valores de funcionamiento.}
+\end{table}
+
+Ahora, mediremos los rangos para los cuales el integrado interpreta
+un 0 lógico y un 1 lógico:
+
+\begin{table}[H]
+\centering{}%
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+Tecnologías & TTL & TTL medido & CMOS & CMOS medido\tabularnewline
+\hline 
+\hline 
+\multirow{3}{*}{1 Lógico (V)} & \multirow{3}{*}{$[2;v_{cc}]$} & \multirow{3}{*}{1.15} & $(V_{cc}=2V)\,[1,5;V_{cc}]$ & {[}1.060 ; Vcc{]}\tabularnewline
+\cline{4-5} 
+ &  &  & $(V_{cc}=4,5V)\,[3,15;V_{cc}]$ & {[}2,28 ; Vcc{]}\tabularnewline
+\cline{4-5} 
+ &  &  & $(V_{cc}=6V)\,[4,2;V_{cc}]$ & {[}2,86; Vcc{]}\tabularnewline
+\hline 
+\multirow{3}{*}{0 Lógico (V)} & \multirow{3}{*}{$[0;0,8]$} & \multirow{3}{*}{1.09} & $(V_{cc}=2V)\,[0;0,5]$ & {[}0 ; 1,02{]}\tabularnewline
+\cline{4-5} 
+ &  &  & $(V_{cc}=4,5V)\,[0;1,35]$ & {[}0 ; 2,29{]}\tabularnewline
+\cline{4-5} 
+ &  &  & $(V_{cc}=6V)\,[0;1,8]$ & {[}0 ; 2,456{]}\tabularnewline
+\hline 
+\end{tabular}\caption{Comparación de rangos de Validez.}
+\end{table}
+
+Se midieron los integrados 74HC02, 74HCT02 y 74LS02, obteniéndose
+los siguientes resultados:
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.2]{\string"Imagenes/TP 2 electro 3/74HC02 (1)\string".png}\includegraphics[scale=0.2]{\string"Imagenes/TP 2 electro 3/74HC02 (4)\string".png}
+\par\end{centering}
+\begin{centering}
+\includegraphics[scale=0.2]{\string"Imagenes/TP 2 electro 3/74HC02 (3)\string".png}\includegraphics[scale=0.2]{\string"Imagenes/TP 2 electro 3/74HC02 (2)\string".png}\caption{Mediciones del 74HC02.}
+\par\end{centering}
+\end{figure}
+
+\begin{figure}[H]
+
+\begin{centering}
+\includegraphics[scale=0.2]{\string"Imagenes/TP 2 electro 3/74HCT02 (3)\string".png}\includegraphics[scale=0.2]{\string"Imagenes/TP 2 electro 3/74HCT02 (4)\string".png}
+\par\end{centering}
+\begin{centering}
+\includegraphics[scale=0.2]{\string"Imagenes/TP 2 electro 3/74HCT02 (2)\string".png}\includegraphics[scale=0.2]{\string"Imagenes/TP 2 electro 3/74HCT02 (1)\string".png}\caption{Mediciones del 74HCT02.}
+\par\end{centering}
+\end{figure}
+
+\begin{figure}[H]
+
+\begin{centering}
+\includegraphics[scale=0.2]{\string"Imagenes/TP 2 electro 3/74LS02 (3)\string".png}\includegraphics[scale=0.2]{\string"Imagenes/TP 2 electro 3/74LS02 (1)\string".png}\caption{Mediciones del 74LS02.}
+\par\end{centering}
+\end{figure}
+
+Como podemos observar, la tecnología TTL tiene distintos niveles de
+ruido que la CMOS, lo que las hacen incompatibles a la hora de unirlas.
+Por ello, el integrado HCT, de tecnología CMOS, posee niveles de ruido
+similar a las TTL, lo que las hace perfectamente compatibles. Un análisis
+más exhaustivo de esto va a ser realizado en el ejercicio 5.
+
+Pasamos a hacer un análisis del fanout. El fanout es la relación entre
+la cantidad de entradas que le puedo cargar a una salida de mi integrado.
+Cuanto más entradas cargo, más tiempo tarda en estabilizarse la señal
+(tengo un mayor rise time). Es modelable como un capacitor en paralelo
+a mi circuito. Cuanto más circuitos tengo, más capacitores tengo,
+ergo mayor tiempo de estabilización. El fanout es proporcional a la
+capacidad del integrado, por lo que se puede expresar de la siguiente
+manera:
+
+$C_{total}=\mathop{\sum}C_{i}$, o lo que equivale que $t_{rise}=n*t_{0}$.
+Si se reemplaza $t_{0}$ por el valor en la hoja de datos, podemos
+calcular el fanout para un número n de entradas.
+
+\section{Ejercicio 5}
+
+\subsection{Comparación de las Tecnologías}
+
+\subsubsection{Tiempo de propagación}
+
+Compararemos el tiempo de propagación (tiempo que demora la salida
+en manifestar su estado), en ambas tecnologías, obteniendo así:
+
+\begin{table}[H]
+
+\centering{}%
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+Tecnologías & TTL & TTL medido & CMOS & \tabularnewline
+\hline 
+\hline 
+\multirow{3}{*}{Low to High (ns)} & \multirow{3}{*}{{[}3;11{]}} & 1.72 & $(V_{cc}=2V)\,[25;90]$ & 90\tabularnewline
+\cline{3-5} 
+ &  &  & $(V_{cc}=4,5V)\,[9;18]$ & 140\tabularnewline
+\cline{3-5} 
+ &  &  & $(V_{cc}=6V)\,[7;15]$ & 112\tabularnewline
+\hline 
+\multirow{3}{*}{High to Low (ns)} & \multirow{3}{*}{{[}3;11{]}} & 82.2 & $(V_{cc}=2V)\,[19;75]$ & 87\tabularnewline
+\cline{3-5} 
+ &  &  & $(V_{cc}=4,5V)\,[7;15]$ & 86\tabularnewline
+\cline{3-5} 
+ &  &  & $(V_{cc}=6V)\,[6;13]$ & 99\tabularnewline
+\hline 
+\end{tabular}\caption{Contraste de tiempos de propagación.}
+\end{table}
+
+\begin{figure}[H]
+
+\begin{centering}
+\includegraphics[scale=0.3]{\string"Imagenes/TP 2 electro 3/Punto 5/74LS08 (2)\string".png}\includegraphics[scale=0.3]{\string"Imagenes/TP 2 electro 3/Punto 5/74LS08 (3)\string".png}\caption{Rise Time y Fall time de la compuerta AND.}
+\par\end{centering}
+\end{figure}
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.3]{\string"Imagenes/TP 2 electro 3/Punto 5/74HC32 (2)\string".png}\includegraphics[scale=0.3]{\string"Imagenes/TP 2 electro 3/Punto 5/74HC32 (3)\string".png}\caption{Rise time y Fall time de la compuerta OR.}
+\par\end{centering}
+\end{figure}
+
+
+\subsection{Análisis de los circuitos}
+
+\subsubsection{Influencia del ruido}
+
+Para esta parte, vamos a observar cuanto afecta el ruido ambiente
+a los integrados con los que trabajamos. Para ello, vamos a realizar
+mediciones según el siguiente esquema:
+
+\begin{figure}[H]
+
+\begin{centering}
+\includegraphics[scale=0.3]{Imagenes/circuitos}\caption{Circuitos para realizar mediciones a los integrados por separado.}
+\par\end{centering}
+\end{figure}
+
+Observamos lo siguiente:
+
+\begin{figure}[H]
+\centering{}\includegraphics[scale=0.3]{\string"Imagenes/TP 2 electro 3/Punto 5/74LS08 (1)\string".png}\includegraphics[scale=0.3]{\string"Imagenes/TP 2 electro 3/Punto 5/74LS08 noise float\string".png}\caption{Medición de la compuerta AND.}
+\end{figure}
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.3]{\string"Imagenes/TP 2 electro 3/Punto 5/74HC32 (1)\string".png}\includegraphics[scale=0.3]{\string"Imagenes/TP 2 electro 3/Punto 5/74HC32 noise test\string".png}\caption{Medición de la compuerta OR.}
+\par\end{centering}
+\end{figure}
+
+
+\subsubsection{Combinación de tecnología CMOS}
+
+Ahora, vamos a ver qué sucede cuando queremos que las dos tecnologías
+interactúen entre sí. Para ello, las vamos a conectar de la siguiente
+manera:
+
+\begin{figure}[H]
+
+\centering{}\includegraphics[scale=0.3]{\string"Imagenes/circuito combinación\string".png}\caption{Circuito de combinación de TTL y CMOS.}
+\end{figure}
+
+Observamos las siguientes salidas:
+
+\begin{figure}[H]
+
+\begin{centering}
+\includegraphics[scale=0.3]{\string"Imagenes/TP 2 electro 3/Punto 5/circuito final  (1)\string".png}\includegraphics[scale=0.3]{\string"Imagenes/TP 2 electro 3/Punto 5/circuito final  (3)\string".png}\caption{Medición con el osciloscopio.}
+\par\end{centering}
+\end{figure}
+
+¿Qué sucede? Si hacemos la tabla de verdad para el circuito, resulta
+que la salida debe ser exactamente igual a la entrada (es decir si
+pongo 5V salen 5V y su par para los 0V). Esto es lo que efectivamente
+se observa en el circuito, sin embargo no es lo que se debe esperar:
+la tecnología CMOS suelen tener un menor rango de valores para los
+cuales interpreta como un 1 lógico, lo que implica que cuando el TTL
+devuelve un 1 lógico puede no caer en la zona equivalente del CMOS
+y que la salida sea ruido.
+
+Este problema, puede ser solucionado de dos grandes formas: la primera
+es usando tecnología compatible (HCT); la segunda, es poniendo un
+level shifter de 3.3V a 5V.
+
+Existen varios levels shifters, desde los más sencillos hasta los
+más sofisticados. Se ilustran a continuación dos posibles soluciones:
+
+\begin{figure}[H]
+\includegraphics[scale=0.6]{Imagenes/HDchC}\includegraphics[scale=0.6]{Imagenes/vk0vs}\caption{Levels shifters para adaptar TTL a CMOS y viceversa.}
+
+\end{figure}
+
+\end{document}

@@ -1,0 +1,475 @@
+%% LyX 2.3.0 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[spanish]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm,headheight=2cm,headsep=2cm,footskip=2cm}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{esint}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+\makeatother
+
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>}}
+
+\begin{document}
+
+\section{Ejercicio 6}
+
+\subsection{Latch SR}
+
+\subsubsection{Introducción teórica }
+
+~
+
+En el presente trabajo practico se implemento un Latch SR con compuertas
+lógicas NAND como se muestra a continuación:
+
+~
+
+\begin{figure}[H]
+
+\begin{centering}
+\includegraphics[scale=0.8]{latchSR-implementacion}
+\par\end{centering}
+\caption{Circuito implementado para la realización del Latch SR}
+\end{figure}
+
+~
+
+El circuito se comporta de la siguiente manera:
+\begin{itemize}
+\item Cuando $Clk=0$, el latch permanece en el estado en que está en el
+instante $t$, es decir, $Q(t)$, independientemente de los valores
+de S y R. 
+\item Cuando $Clk$ cambia a $1$, las señales S' y R' serán iguales que
+las señales S y R, respectivamente. En estas condiciones, nuestro
+circuito cuenta con la capacidad de establecerse en 1 e inicializarse
+en 0 (S por set y R por reset, establecerse e inicializarse, respectivamente). 
+\end{itemize}
+~
+
+A continuación se procederá a mostrar su símbolo gráfico, su tabla
+característica y un ejemplo para una mayor comprensión del mismo:
+
+~
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.65]{latchSR}
+\par\end{centering}
+\caption{a) Símbolo gráfico ; b) Tabla caracteristica ; c) Ejemplo }
+
+\end{figure}
+
+~
+
+En la última fila del ejemplo, donde $S=R=1$, se muestra que el estado
+$Q(t+1)$ no está definido porque no sabemos si será 0 o 1. Por esto,
+debemos remarcar que para asegurar una operación significativa del
+Latch SR es esencial evitar la posibilidad de tener las dos entradas
+S y R iguales a 1 cuando $Clk$ cambia de 1 a 0.
+
+~
+
+\subsubsection{Mediciones realizadas y análisis de resultados}
+
+~
+
+Para realizar las mediciones del Latch SR se implemento en PCB el
+circuito presentado en la subsubseccion anterior haciendo uso del
+integrado 74HC00 (datasheet: https://assets.nexperia.com/documents/data-sheet/74HC\_HCT00.pdf).
+
+~
+
+Por otro lado, a partir de la hoja de datos del integrado 74HC749,
+notamos que algunos de los tiempos que caracterizan al Latch SR son:
+$t_{establecimiento},t_{rise}$ y ~$t_{fall}$. Es por esto, que
+realizamos la medición de dichos tiempos para luego poder realizar
+una comparación con los tiempos dados en la hoja de datos del integrado
+74HC749.
+
+~
+
+Los tiempos de rise y fall son sencillos de medir y se midieron del
+10\% al 90\% de la subida o bajada de la señal respectivamente. Para
+el tiempo de establecimiento nos pareció mas claro mostrar imágenes
+de como fue medido:
+
+~
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.05]{t_est_subida_SR}~~~~~\includegraphics[scale=0.055]{t_est_bajada_SR}
+\par\end{centering}
+\caption{Medición del tiempo de establecimiento}
+
+\end{figure}
+
+~
+
+Finalmente, los resultados obtenidos fueron los siguientes:
+
+~
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+$Clk$ & R & S & $Q(t)$$\rightarrow$$Q(t+1)$ & $t_{establecimento}(ns)$\tabularnewline
+\hline 
+\hline 
+$\landupint$ & 0 & 1 & $0\rightarrow1$ & 21.6\tabularnewline
+\hline 
+$\landupint$ & 1 & 0 & $1\rightarrow0$ & 14.4\tabularnewline
+\hline 
+\end{tabular} ~~~~~~~~~~%
+\begin{tabular}{|c|c|}
+\hline 
+$t_{rise}(ns)$ & $t_{fall}(ns)$\tabularnewline
+\hline 
+\hline 
+37.8 & 36.2\tabularnewline
+\hline 
+\end{tabular}
+\par\end{centering}
+~
+
+\caption{Mediciones realizadas a partir del circuito implementado}
+\end{table}
+
+~
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+$Clk$ & R & S & $Q(t)$$\rightarrow$$Q(t+1)$ & $t_{establecimento}(ns)$\tabularnewline
+\hline 
+\hline 
+$\landupint$ & 0 & 1 & $0\rightarrow1$ & 20\tabularnewline
+\hline 
+$\landupint$ & 1 & 0 & $1\rightarrow0$ & 13\tabularnewline
+\hline 
+\end{tabular} ~~~~~~~~~~%
+\begin{tabular}{|c|c|}
+\hline 
+$t_{rise}(ns)$ & $t_{fall}(ns)$\tabularnewline
+\hline 
+\hline 
+<400 & <400\tabularnewline
+\hline 
+\end{tabular}
+\par\end{centering}
+~
+
+\caption{Datos obtenidos de la datasheet del integrado 74HC749 }
+\end{table}
+
+~
+
+Comparando los tiempos medidos con los dados en la hoja de datos del
+fabricante del 74HC749, notamos que los tiempos del fabricante son
+levemente mejores. Esto puede deberse a una mejora en la cantidad
+de transistores utilizados por el fabricante dentro del integrado.
+
+\subsection{Flip-Flop D disparado por flanco }
+
+\subsubsection{Introducción teórica}
+
+~~ Se implemento un flip-flop D maestro-esclavo que responde al
+flanco negativo de la señal de reloj. El mismo se compone de dos latches
+D. El primero, llamado maestro, cambia su estado mientras $Clk=1$.
+El segundo, denominado esclavo, lo hace mientras $Clk=0.$ El funcionamiento
+del circuito es tal que cuando el reloj está en nivel alto, el latch
+maestro (o $Qm$) sigue el valor de la señal de entrada D y el esclavo
+(o $Qs$) no cambia. Cuando la señal de reloj cambia a 0, la etapa
+de maestro deja de seguir los cambios en la entrada D. Al mismo tiempo,
+la etapa de esclavo responde al valor de la señal $Qm$ y por consiguiente
+$Qs$ cambia de estado. Como $Qm$ no cambia mientras $Clk=0$, la
+etapa de esclavo puede sufrir cuando mucho un cambio de estado durante
+un ciclo del reloj. 
+
+~
+
+A continuación se muestra la implementación del mismo, donde cada
+latch D esta compuesto por el circuito mostrado a la derecha de la
+siguiente imagen:
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.6]{flipflopD_implementacion}
+\par\end{centering}
+\caption{Circuito del Flip-Flop D disparado por flanco negativo}
+\end{figure}
+
+~
+
+Finalmente, se procederá a mostrar su símbolo gráfico y un ejemplo
+para una mayor comprensión del mismo:
+
+~
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.65]{flipflopD_ejemplo}
+\par\end{centering}
+\caption{a) Símbolo gráfico ; b) Ejemplo }
+\end{figure}
+
+~
+
+\subsubsection{Mediciones realizadas y análisis de resultados}
+
+~
+
+Para la implementación del Flip-Flop D, se utilizaron dos integrados
+74HC00 (utilizado anteriormente) y un 74HC04 (datasheet: https://assets.nexperia.com/documents/data-sheet/74HC\_HCT04.pdf).
+Al igual que para el Latch SR, la implementación fue en PCB y el circuito
+implementado fue el mismo que el mostrado en la subsubseccion anterior
+donde cada Latch D fue realizado con compuertas NAND.
+
+~
+
+Los tiempos que se midieron fueron los mismos que en la sección anterior
+y los resultados fueron los siguientes:
+
+~
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.055]{t_est_subida_FFD}~~~~~\includegraphics[scale=0.05]{t_est_bajada_FFD}
+\par\end{centering}
+\caption{Medición del tiempo de establecimiento}
+\end{figure}
+
+~
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+$Clk$ & D & $Q(t)$$\rightarrow$$Q(t+1)$ & $t_{establecimento}(ns)$\tabularnewline
+\hline 
+\hline 
+$\landdownint$ & 1 & $0\rightarrow1$ & 29\tabularnewline
+\hline 
+$\landdownint$ & 0 & $1\rightarrow0$ & 25.2\tabularnewline
+\hline 
+\end{tabular} ~~~~~~~~~~%
+\begin{tabular}{|c|c|}
+\hline 
+$t_{rise}(ns)$ & $t_{fall}(ns)$\tabularnewline
+\hline 
+\hline 
+46.2 & 48.9\tabularnewline
+\hline 
+\end{tabular}
+\par\end{centering}
+~
+
+\caption{Mediciones realizadas a partir del circuito implementado}
+\end{table}
+
+~
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+$Clk$ & D & $Q(t)$$\rightarrow$$Q(t+1)$ & $t_{establecimento}(ns)$\tabularnewline
+\hline 
+\hline 
+$\landupint$ & 1 & $0\rightarrow1$ & 18\tabularnewline
+\hline 
+$\landupint$ & 0 & $1\rightarrow0$ & 13\tabularnewline
+\hline 
+\end{tabular} ~~~~~~~~~~%
+\begin{tabular}{|c|c|}
+\hline 
+$t_{rise}(ns)$ & $t_{fall}(ns)$\tabularnewline
+\hline 
+\hline 
+<400 & <400\tabularnewline
+\hline 
+\end{tabular}
+\par\end{centering}
+~
+
+\caption{Datos obtenidos de la datasheet del integrado 74HC74 }
+\end{table}
+
+~
+
+Si bien el integrado con el cual se comparo (74HC74) es de flanco
+positivo, la comparación sirve igual. En este caso, la diferencia
+que existe con los datos medidos son mayores que para el caso del
+Latch SR. Eso se debe a que la cantidad de compuertas utilizadas es
+mucho mayor que en el caso del Latch, lo que produce que haya un mayor
+retardo. 
+
+\pagebreak{}
+
+\section{Ejercicio 7}
+
+\subsection{Contador asincronico de tres bits}
+
+~
+
+\subsubsection{Introducción teórica}
+
+~
+
+La implementación del mismo es la siguiente: 
+
+\begin{figure}[H]
+
+\begin{centering}
+\includegraphics[scale=0.8]{contador_asinc_circuit}
+\par\end{centering}
+\caption{Circuito del contador asincronico de tres bits}
+
+\end{figure}
+
+~
+
+El mismo esta compuesto por tres flip-flops T (su nombre proviene
+de Toggle y su función es: conserva su estado presente si T=0 y lo
+invierte si T=1.)
+
+La entrada T de cada flip-flop está conectada a una constante 1, lo
+que significa que el estado del flip-flop se invertirá en cada flanco
+positivo de su reloj. 
+
+Las entradas del reloj de los tres flip-flops están conectadas en
+cascada. 
+
+Podemos decir que el contador de la figura anterior tiene tres etapas,
+y cada una consta de un solo flip-flop. Sólo la primera etapa responde
+directamente a la señal Clk; decimos que esta etapa está sincronizada
+con el reloj. Las otras dos etapas responden después de un retraso
+adicional.
+
+\subsubsection{Mediciones realizadas y análisis de resultados}
+
+~
+
+Para la implementación del contador asincronico se utilizaron dos
+integrados 74HC107 (datasheet: https://assets.nexperia.com/documents/data-sheet/74HC\_HCT107.pdf
+). Estos integrados contienen flip-flops JK pero los mismos funcionan
+como flip-flop T si se une la entrada J con la entrada K. Los mismos
+eran los únicos disponibles en el pañol. 
+
+Para armar el circuito se utilizo una protoboard. A la misma le agregamos
+LEDs para poder visualizar mejor su comportamiento. Contamos con vídeos
+del circuito armado en la proto y funcionando correctamente.
+
+~
+
+Para concluir, mostramos dos de las mediciones que realizamos:
+
+~
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.2]{dist_ret}~~~~\includegraphics[scale=0.2]{dist_ret9}
+\par\end{centering}
+\caption{Mediciones realizadas para el contador asincronico}
+
+\end{figure}
+
+~
+
+En la primera imagen podemos ver el correcto funcionamiento de nuestro
+contador. Donde la señal rosa corresponde al Clk, la señal amarilla
+a Q$_{0}$, la señal verde a Q$_{1}$ y la señal violeta a Q$_{2}$.
+
+~
+
+La segunda imagen hace 'zoom' a las señales cuando el contador pasa
+de valer 7 (todas las señales en alto) a valer 0 (todas las señales
+en bajo). A partir de esta imagen notamos como el retardo de la señal
+Q$_{0}$(amarilla) es menor que la de Q$_{1}$(verde). Cuyo retardo
+a su vez es menor que el retardo de la señal Q$_{2}$(violeta). Como
+vimos en la teoría, esta es una de las características de este contador
+y es por esto que recibe el nombre de contador asincronico.
+
+~
+
+\subsection{Contador sincrónico de tres bits}
+
+~
+
+\subsubsection{Introducción teórica}
+
+~
+
+Los contadores asincronicos de la subseccion anterior son simples,
+pero no muy rápidos. Si se construye un contador con un número grande
+de bits, las demoras causadas por el esquema de sincronización en
+cascada pueden volverse demasiado grandes para satisfacer los requisitos
+de desempeño deseados. Podemos construir un contador más rápido si
+sincronizamos todos los flip-flops al mismo tiempo aplicando el método
+descrito a continuación:
+
+~
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics{contador_sinc_circuit}
+\par\end{centering}
+\caption{Circuito del contador sincrónico de tres bits}
+\end{figure}
+
+~
+
+Debido a que todos los cambios ocurren con el mismo retraso después
+del flanco activo de la señal Clk, el circuito se llama contador sincrónico.
+
+\subsubsection{Mediciones realizadas y análisis de datos}
+
+~
+
+Para la implementación del contador sincrónico se utilizaron dos integrados
+74HC107 (utilizado anteriormente) y un integrado 74HC08 (datasheet:
+https://assets.nexperia.com/documents/data-sheet/74HC\_HCT08.pdf).
+Esta implementación, al igual que para el contador asincronico, fue
+realizada en una protoboard al cual se le agregaron LEDs para verificar
+su buen comportamiento mas fácilmente.
+
+~
+
+Las mediciones que se realizaron fueron las mismas que para el caso
+del contador anterior:
+
+~
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.2]{mismo_ret9}~~~~\includegraphics[scale=0.2]{samismo_ret}
+\par\end{centering}
+\caption{Mediciones realizadas para el contador sincrónico}
+\end{figure}
+
+~
+
+En la primera imagen vemos el buen comportamiento de nuestro contador
+(los colores se corresponden con los del contador anterior). 
+
+En la segunda imagen podemos notar como los retardos de las tres señales
+(Q$_{0}$, Q$_{1}$ y Q$_{2}$) se asemejan muchísimo mas que en el
+caso del contador asincronico. Según la teoría, esto es lo que tiene
+que ocurrir, ya que el Clk que controla cada una de las tres etapas
+del contador sincrónico es el mismo. De esta forma, los retardos de
+las tres etapas son los mismos. 
+
+~
+\end{document}
