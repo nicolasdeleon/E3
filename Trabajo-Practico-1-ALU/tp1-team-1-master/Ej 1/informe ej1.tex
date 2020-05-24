@@ -1,0 +1,61 @@
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\begin{document}
+
+\subsection{Ejercicio 1}
+
+\subsubsection{Introducci\'{o}n}
+
+Uno de los problemas de la era digital que se han enfrentado, es el
+hecho de representar n\'{u}meros, puesto que para ello, solo se tiene
+una cantidad finita de d\'{\i}gitos. Para esto, se contemplaron dos
+solucienes: escribir los numeros en formato punto fijo, o en formato
+punto flotante, tanto para n\'{u}meros no signados como signados.
+En este ejercicio, hablaremos del punto fijo.
+
+El punto fijo es una forma de representaci\'{o}n num\'{e}rica que
+consiste en previamente establecer la cantidad de d\'{\i}gitos que
+se desean para la parte entera, y establecer otra cantidad de d\'{\i}gitos
+para la parte fraccionaria ( m\'{a}s conocida como la que ``est\'{a}
+detras de la coma''). Como los d\'{\i}gitos pueden ser establecidos
+de manera arbitraria, existen par\'{a}metros para definirlos, a saber:
+resoluci\'{o}n, rango y exactitud. 
+
+La resoluci\'{o}n consiste en determinar la magnitud m\'{a}s peque\~{n}a
+que es posible de representar con la cantidad de d\'{\i}gitos elegidos.
+El rango referencia la cantidad neta que es posible de representar
+con los d\'{\i}gitos elegidos, ya que el valor sale de la resta entre
+el n\'{u}mero m\'{a}s grande representable menos el m\'{a}s peque\~{n}o
+representable. Por \'{u}ltimo, la exactitud consiste en el m\'{a}ximo
+error que se comete entre un n\'{u}mero real y su representaci\'{o}n.
+
+\subsubsection{Objetivo}
+
+El objetivo del presente ejercicio es realizar un programa en el cual,
+dandole una cantidad de cifras de la parte entera, la cantidad de
+cifras de la parte fraccionaria y la condici\'{o}n de signado o no
+signado, devuelva la resoluci\'{o}n y el rango del sistema conformado.
+
+\subsubsection{Funcionamiento del programa}
+
+El programa fue realizado en el lenguaje C. Se le pasan por la l\'{\i}nea
+de par\'{a}metros los siguientes valores: signado/no signado, cantidad
+de bits de la parte entera, cantidad de bits de la parte fraccionara.
+En primera instancia, el programa eval\'{u}a que la cantidad de valores
+ingresados sea la correcta. Luego, extrae los valores para poder trabajar
+con ellos y verifica que \'{e}stos ingresados sean validos, a saber:
+el valor signado/no signado acepta el valor 0 como no signado y 1
+o '-' como signado; los otros valores s\'{o}lo es posible ingresar
+n\'{u}meros.
+
+Luego, procede a hacer las cuentas para devolver los par\'{a}metros
+estipulados, se basa en trabajar con potencias de 2 tanto negativas
+como positivas, y seg\'{u}n si el parametro es signado o no signado.Por
+\'{u}ltimo, se imprimen en pantalla los valores calculados.
+
+Para finalizar, destacamos que se realiz\'{o} una funci\'{o}n propia para hacer la operaci\'{o}n
+$2^{n}$ un poco mas sencilla.
+
+
+\end{document}

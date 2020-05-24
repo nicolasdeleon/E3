@@ -1,0 +1,942 @@
+%% LyX 2.3.0 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[spanish,spanish,english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm,headheight=2cm,headsep=2cm,footskip=2cm}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{textcomp}
+\usepackage{amstext}
+\usepackage{graphicx}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+\makeatother
+
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>}}
+
+\addto\shorthandsspanish{\spanishdeactivate{~<>.}}
+
+\begin{document}
+\selectlanguage{spanish}%
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
+ \global\long\def\HRule{\rule{\linewidth}{0.5mm}}
+ % Defines a new command for horizontal lines, change thickness here
+ \center % Centre everything on the page
+ %------------------------------------------------
+ %	Headings
+ %------------------------------------------------
+ \textsc{\LARGE{}Instituto Tecnológico de Buenos Aires}{\LARGE{}\\[1.5cm]
+% Main heading such as the name of your university/college
+ }\textsc{\Large{}Electrónica III}{\Large{}\\[0.5cm]  }{\Large\par}
+
+\textbf{\huge{}Trabajo Práctico I}\textbf{\\[0.4cm] % Title of your document
+ \HRule\\[1.5cm]}
+
+%------------------------------------------------
+%	Author(s)
+%------------------------------------------------
+\begin{minipage}[c]{0.4\textwidth}%
+\begin{flushleft}
+\textit{\large{}Grupo 3:}{\large{}}\\
+\par\end{flushleft}
+\begin{flushleft}
+{\large{}De Leon, Nicolás}\textsc{\large{} }{\large{}}\\
+{\large{}Leg. 57232}{\large\par}
+\par\end{flushleft}
+\begin{flushleft}
+{\large{}Lago, Valentina}\\
+{\large{}Leg. 57249}{\large\par}
+\par\end{flushleft}
+\begin{flushleft}
+{\large{}Bualó, Santiago}\textsc{\large{} }{\large{}}\\
+{\large{}Leg. 57557 }{\large\par}
+\par\end{flushleft}
+\begin{flushleft}
+{\large{}Silva, Gonzalo}\textsc{\large{} }{\large{}}\\
+{\large{}Leg. 56089 }{\large\par}
+\par\end{flushleft}
+\begin{flushleft}
+\textsc{\large{}Vigón}{\large{}, Tomás }\\
+{\large{}Leg. 57327}{\large\par}
+\par\end{flushleft}
+\begin{flushleft}
+{\large{}% Your name
+ }{\large\par}
+\par\end{flushleft}%
+\end{minipage}~ %
+\begin{minipage}[c]{0.4\textwidth}%
+\begin{flushright}
+\textit{\large{}Profesor:}{\large\par}
+\par\end{flushright}
+\begin{flushright}
+{\large{}Kevin Dewald}{\large\par}
+\par\end{flushright}
+\begin{flushright}
+{\large{}% Supervisor's name
+ }{\large\par}
+\par\end{flushright}%
+\end{minipage}
+
+% If you don't want a supervisor, uncomment the two lines below and comment the code above
+%{\large\textit{Author}}\\
+%John \textsc{Smith} % Your name
+%------------------------------------------------
+%	Date
+%------------------------------------------------
+\vfill{}
+\vfill{}
+\vfill{}
+{\large{}
+\large{Presentado: \today}\\
+\begin{minipage}{0.4125\textwidth}
+\vspace{5mm}
+\end{minipage}} % Date, change the \today to a set date if you want to be precise
+ %------------------------------------------------
+ %	Logo
+ %------------------------------------------------
+ %\vfill\vfill
+ %\includegraphics[width=0.2\textwidth]{placeholder.jpg}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ %----------------------------------------------------------------------------------------
+ \vfill{}
+\end{titlepage}
+
+\tableofcontents{}
+
+\newpage{}
+
+\section{Ejercicio 1}
+\selectlanguage{english}%
+
+\subsection{Introducción}
+
+Uno de los problemas de la era digital que se han enfrentado, es el
+hecho de representar números, puesto que para ello, solo se tiene
+una cantidad finita de dígitos. Para esto, se contemplaron dos solucienes:
+escribir los numeros en formato punto fijo, o en formato punto flotante,
+tanto para números no signados como signados. En este ejercicio, hablaremos
+del punto fijo.
+
+El punto fijo es una forma de representación numérica que consiste
+en previamente establecer la cantidad de dígitos que se desean para
+la parte entera, y establecer otra cantidad de dígitos para la parte
+fraccionaria ( más conocida como la que ``está detras de la coma'').
+Como los dígitos pueden ser establecidos de manera arbitraria, existen
+parámetros para definirlos, a saber: resolución, rango y exactitud. 
+
+La resolución consiste en determinar la magnitud más pequeña que es
+posible de representar con la cantidad de dígitos elegidos. El rango
+referencia la cantidad neta que es posible de representar con los
+dígitos elegidos, ya que el valor sale de la resta entre el número
+más grande representable menos el más pequeño representable. Por último,
+la exactitud consiste en el máximo error que se comete entre un número
+real y su representación.
+
+\subsection{Objetivo}
+
+El objetivo del presente ejercicio es realizar un programa en el cual,
+dandole una cantidad de cifras de la parte entera, la cantidad de
+cifras de la parte fraccionaria y la condición de signado o no signado,
+devuelva la resolución y el rango del sistema conformado.
+
+\subsection{Funcionamiento del programa}
+
+El programa fue realizado en el lenguaje C. Se le pasan por la línea
+de parámetros los siguientes valores: signado/no signado, cantidad
+de bits de la parte entera, cantidad de bits de la parte fraccionara.
+En primera instancia, el programa evalúa que la cantidad de valores
+ingresados sea la correcta. Luego, extrae los valores para poder trabajar
+con ellos y verifica que éstos ingresados sean validos, a saber: el
+valor signado/no signado acepta el valor 0 como no signado y 1 o '-'
+como signado; los otros valores sólo es posible ingresar números.
+
+Luego, procede a hacer las cuentas para devolver los parámetros estipulados,
+se basa en trabajar con potencias de 2 tanto negativas como positivas,
+y según si el parametro es signado o no signado.Por último, se imprimen
+en pantalla los valores calculados.
+
+Para finalizar, destacamos que se realizó una función propia para
+hacer la operación $2^{n}$ un poco mas sencilla.
+\selectlanguage{spanish}%
+
+\section{Ejercicio 2}
+
+Dada la siguiente expresión en maxtérminos
+
+\[
+f(d,c,b,a)=\prod\left(M_{0},M_{1},M_{5},M_{7},M_{8},M_{10},M_{14},M_{15}\right)
+\]
+
+se la reescribió en función de mintérminos para realizar las simplificaciones
+\[
+f(d,c,b,a)=\sum\left(m_{2},m_{3},m_{4},m_{6},m_{9},m_{11},m_{12},m_{13}\right)
+\]
+
+
+\subsection{Álgebra booleana}
+
+La función expandida tiene la forma 
+\[
+f(d,c,b,a)=\bar{(d}.\bar{c}.b.\bar{a}+\bar{d}.\bar{c}.b.a)+\bar{(d}.c.\bar{b}.\bar{a}+\bar{d}.c.b.\bar{a})+(d.\bar{c}.\bar{b}.a+d.\bar{c}.b.a)+(d.c.\bar{b}.\bar{a}+d.c.\bar{b}.a)
+\]
+
+Se agrupó en paréntesis para aplicar la propiedad distributiva $12.a$
+del libro sobre esos términos
+
+\[
+f(d,c,b,a)=\bar{d}.\bar{c}.b.(\bar{a}+a)+\bar{d}.c.\bar{a}.(\bar{b}+b)+d.\bar{c}.a.(\bar{b}+b)+d.c.\bar{b}.(\bar{a}+a)
+\]
+
+Luego, utilizando la propiedad $8b$ también del libro 
+
+\[
+f(d,c,b,a)=\bar{d}.\bar{c}.b+\bar{d}.c.\bar{a}+d.\bar{c}.a+d.c.\bar{b}
+\]
+
+Donde la función quedó expresada en su forma más simplificada.
+
+\subsection{Mapas de Karnaugh}
+
+Los mapas de Karnaugh son otra herramienta para la simplificación
+de funciones y se puede usar tanto con la expresión en mintérminos
+como con maxtérminos. A continuación se muestra el mapa de Karnaugh
+para este ejercicio.
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.5]{\string"EJ 2/Karnaugh\string".png}
+\par\end{centering}
+\caption{Mapa de Karnaugh}
+\end{figure}
+
+Se agruparon los unos ya que estos representan los mintérminos y por
+grupo únicamente se pueden tomar $2^{n}$ unos; mientras más grande
+sea la agrupación, mayor es la simplificación. 
+
+Las simplificaciones son por grupo, la variable que se modifica no
+es tenida en cuenta, las que están asociadas al cero se niegan y las
+que están asociadas al uno se expresan normalmente. Las expresiones
+obtenidas de cada grupo son:
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+I & II & III & IV\tabularnewline
+\hline 
+\hline 
+\[
+\bar{d}.\bar{c}.b
+\]
+ & $\bar{d}.c.\bar{a}$ & $d.c.\bar{b}$ & $d.\bar{c}.a$\tabularnewline
+\hline 
+\end{tabular}
+\par\end{centering}
+\caption{Simplificación}
+\end{table}
+
+Finalmente sumándolos se llega al resultado final.
+
+\subsection{Circuito resultante con compuertas AND, OR, NOT}
+
+Teniendo en cuenta la expresión más simplificada se armó el siguiente
+circuito
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.4]{\string"EJ 2/parteC\string".png}
+\par\end{centering}
+\caption{Circuito simplificado}
+\end{figure}
+
+Se utilizaron 13 componentes y 22 entradas, por lo tanto, el costo
+del circuito toma el valor de 35.
+
+\subsection{Circuito solamente con compuertas NOR}
+
+De la misma manera que la mencionada en el punto anterior se obtuvo
+el siguiente circuito
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.4]{\string"EJ 2/parteD\string".png}
+\par\end{centering}
+\caption{Circuito simplificado}
+\end{figure}
+
+El circuito contiene 14 componentes y 28 entradas por lo que el costo
+es de 42.
+\selectlanguage{english}%
+
+\part*{Ejercicio 3}
+
+Se desean realiazar dos modulos en Verilog, un Decoder de dos entradas
+y un Mux de cuatro entradas. Ademas de esos dos modulos se implemento
+un Encoder.
+
+El programa que se realizo en Verilog, fue hecho con if statments,
+esto quiere decir que este, es ajeno a las compuertas logicas y a
+su distribucion necesarias para poner en funcionamiento el circuito.
+A continuacion, se insertaran figuras de estos tres circuitos, para
+poder entender el funcionamiento de estos.
+
+\begin{figure}
+\begin{centering}
+\includegraphics[scale=0.4]{\string"Informe Ej 3/Untitled Diagram-2\string".png}\caption{Decoder de dos entradas}
+\par\end{centering}
+\end{figure}
+
+Este es un decoder como el que se realizo en el programa, tiene dos
+entradas y cuatro salidas y su tabla de verdad es:
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline 
+Input 1 & Input 2 & Output 1 & Output 2 & Output 3 & Output 4\tabularnewline
+\hline 
+\hline 
+0 & 0 & \textbf{1} & \textbf{0} & \textbf{0} & \textbf{0}\tabularnewline
+\hline 
+0 & 1 & \textbf{0} & \textbf{1} & \textbf{0} & \textbf{0}\tabularnewline
+\hline 
+1 & 0 & \textbf{0} & \textbf{0} & \textbf{1} & \textbf{0}\tabularnewline
+\hline 
+1 & 1 & \textbf{0} & \textbf{0} & \textbf{0} & \textbf{1}\tabularnewline
+\hline 
+\end{tabular}
+\par\end{center}
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.4]{\string"Informe Ej 3/Mux\string".png}
+\par\end{centering}
+\caption{Mux de 4 entradas}
+
+\end{figure}
+
+Este es un Mux como el que se realizo en el progama, tiene cuatro
+entradas, una salida y dos select lines. La tabla de verdad es:
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline 
+a1 & a0 & $x$\tabularnewline
+\hline 
+\hline 
+0 & 0 & \textbf{In1}\tabularnewline
+\hline 
+0 & 1 & \textbf{In2}\tabularnewline
+\hline 
+1 & 0 & \textbf{In3}\tabularnewline
+\hline 
+1 & 1 & \textbf{In4}\tabularnewline
+\hline 
+\end{tabular}
+\par\end{center}
+
+\begin{figure}
+\begin{centering}
+\includegraphics[scale=0.55]{\string"Informe Ej 3/encoder\string".png}
+\par\end{centering}
+\caption{Encoder de 4 entradas}
+
+\end{figure}
+Este es un encoder como el que se realizo en Verilog, es de 4 entradas
+y dos salidas. La tabla de verdad es:
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline 
+In1 & In2 & In3 & In4 & Out1 & Out2\tabularnewline
+\hline 
+\hline 
+1 & 0 & 0 & 0 & \textbf{0} & \textbf{0}\tabularnewline
+\hline 
+0 & 1 & 0 & 0 & \textbf{0} & \textbf{1}\tabularnewline
+\hline 
+0 & 0 & 1 & 0 & \textbf{1} & \textbf{0}\tabularnewline
+\hline 
+0 & 0 & 0 & 1 & \textbf{1} & \textbf{1}\tabularnewline
+\hline 
+\end{tabular}
+\par\end{center}
+
+Como se puede ver en la figura 3, una de las entradas no esta conectada
+al circuito, pero esto no modifica la salida, ya que puede ser 1 en
+un solo caso, en el cual todas las demas entradas son 0, en el resto
+de los casos, In3 es siempre 0.
+
+\section*{Ejercicio 4 }
+
+Se desea realizar un circuito que convierta un número binario de 4
+bits en su complemento a dos.
+
+\textbullet{} Exprese el valor de cada bit de salida en función de
+los mintérminos de los bits de entrada.
+
+\textbullet{} Exprese el valor de cada bit de salida en forma simplificada. 
+
+\textbullet{} Dibuje el circuito lógico resultante utilizando compuertas
+AND, OR, NOT. 
+
+\textbullet{} Implemente el circuito resultante en Verilog.
+
+~
+
+Para obtener el complemento a dos de un numero binario se invierte
+el valor de cada una de sus cifras, es decir, se realiza el complemento
+a uno, y luego se le suma uno al número resultante de la inversión. 
+
+Su utilidad principal se encuentra en las operaciones matemáticas
+con números binarios. En particular, la resta de números binarios
+se facilita enormemente utilizando el complemento a dos: la resta
+de dos números binarios puede obtenerse sumando al minuendo el complemento
+a dos del sustraendo. 
+
+~
+
+Además, llamaremos mintérmino $m_{i}$ a aquel que se forma multiplicando
+(AND lógico) todas las variables, negando aquellas que valen 0 en
+la combinación para la cual queremos que el mintérmino valga 1. Para
+N variables booleanas, existen $2^{N}$ mintérmino, uno para cada
+posible combinación de ellas.
+
+~
+
+A continuación se realiza la tabla de verdad para un numero binario
+de 4 bits. Donde a cada número binario ($x_{1}$$x_{2}$$x_{3}$$x_{4}$)
+le corresponde su respectivo complemento a dos a la salida ($f_{1}f_{2}f_{3}f_{4}$).
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{cccc}
+\toprule 
+$x_{1}$ & $x_{2}$ & $x_{3}$ & $x_{4}$\tabularnewline
+\midrule
+\midrule 
+0 & 0 & 0 & 0\tabularnewline
+\midrule 
+0 & 0 & 0 & 1\tabularnewline
+\midrule 
+0 & 0 & 1 & 0\tabularnewline
+\midrule 
+0 & 0 & 1 & 1\tabularnewline
+\midrule 
+0 & 1 & 0 & 0\tabularnewline
+\midrule 
+0 & 1 & 0 & 1\tabularnewline
+\midrule 
+0 & 1 & 1 & 0\tabularnewline
+\midrule 
+0 & 1 & 1 & 1\tabularnewline
+\midrule 
+1 & 0 & 0 & 0\tabularnewline
+\midrule 
+1 & 0 & 0 & 1\tabularnewline
+\midrule 
+1 & 0 & 1 & 0\tabularnewline
+\midrule 
+1 & 0 & 1 & 1\tabularnewline
+\midrule 
+1 & 1 & 0 & 0\tabularnewline
+\midrule 
+1 & 1 & 0 & 1\tabularnewline
+\midrule 
+1 & 1 & 1 & 0\tabularnewline
+\midrule 
+1 & 1 & 1 & 1\tabularnewline
+\bottomrule
+\end{tabular}%
+\begin{tabular}{cccc}
+\toprule 
+$f_{1}$ & $f_{2}$ & $f_{3}$ & $f_{4}$\tabularnewline
+\midrule
+\midrule 
+0 & 0 & 0 & 0\tabularnewline
+\midrule 
+1 & 1 & 1 & 1\tabularnewline
+\midrule 
+1 & 1 & 1 & 0\tabularnewline
+\midrule 
+1 & 1 & 0 & 1\tabularnewline
+\midrule 
+1 & 1 & 0 & 0\tabularnewline
+\midrule 
+1 & 0 & 1 & 1\tabularnewline
+\midrule 
+1 & 0 & 1 & 0\tabularnewline
+\midrule 
+1 & 0 & 0 & 1\tabularnewline
+\midrule 
+1 & 0 & 0 & 0\tabularnewline
+\midrule 
+0 & 1 & 1 & 1\tabularnewline
+\midrule 
+0 & 1 & 1 & 0\tabularnewline
+\midrule 
+0 & 1 & 0 & 1\tabularnewline
+\midrule 
+0 & 1 & 0 & 0\tabularnewline
+\midrule 
+0 & 0 & 1 & 1\tabularnewline
+\midrule 
+0 & 0 & 1 & 0\tabularnewline
+\midrule 
+0 & 0 & 0 & 1\tabularnewline
+\bottomrule
+\end{tabular}{\small{}}%
+\begin{tabular}{c}
+\toprule 
+$m_{i}$\tabularnewline
+\midrule
+\midrule 
+{\small{}$m_{0}$}\tabularnewline
+\midrule 
+{\small{}$m_{1}$}\tabularnewline
+\midrule 
+{\small{}$m_{2}$}\tabularnewline
+\midrule 
+{\small{}$m_{3}$}\tabularnewline
+\midrule 
+{\small{}$m_{4}$}\tabularnewline
+\midrule 
+{\small{}$m_{5}$}\tabularnewline
+\midrule 
+{\small{}$m_{6}$}\tabularnewline
+\midrule 
+{\small{}$m_{7}$}\tabularnewline
+\midrule 
+{\small{}$m_{8}$}\tabularnewline
+\midrule 
+{\small{}$m_{9}$}\tabularnewline
+\midrule 
+{\small{}$m_{10}$}\tabularnewline
+\midrule 
+{\small{}$m_{11}$}\tabularnewline
+\midrule 
+{\small{}$m_{12}$}\tabularnewline
+\midrule 
+{\small{}$m_{13}$}\tabularnewline
+\midrule 
+{\small{}$m_{14}$}\tabularnewline
+\midrule 
+{\small{}$m_{15}$}\tabularnewline
+\bottomrule
+\end{tabular}{\small\par}
+\par\end{centering}
+\caption{Complemento a dos $(f_{1}$$f_{2}$$f_{3}$$f_{4}$) del bit de entrada
+($x_{1}$$x_{2}$$x_{3}$$x_{4}$) }
+
+\end{table}
+
+Se expresa la salida como función de los mintérminos. Para expresar
+la función en mintérminos tomamos donde la función sea 1 y unimos
+los mintérminos con sumas:
+\begin{center}
+$f_{1}(m_{i})=m_{1}+m_{2}+m_{3}+m_{4}+m_{5}+m_{6}+m_{7}+m_{8}$
+\par\end{center}
+
+\begin{center}
+$f_{2}(m_{i})=m_{1}+m_{2}+m_{3}+m_{4}+m_{9}+m_{10}+m_{11}+m_{12}$
+\par\end{center}
+
+\begin{center}
+$f_{3}(m_{i})=m_{1}+m_{2}+m_{5}+m_{6}+m_{9}+m_{10}+m_{13}+m_{14}$
+\par\end{center}
+
+\begin{center}
+$f_{4}(m_{i})=m_{1}+m_{3}+m_{5}+m_{7}+m_{9}+m_{11}+m_{13}+m_{15}$
+\par\end{center}
+
+Se reemplaza por los valores de entrada,
+
+~
+
+$f_{1}(x_{1},x_{2},x_{3},x_{4})=\overline{x_{1}}\overline{x_{2}}\overline{x_{3}}x_{4}+\overline{x_{1}}\overline{x_{2}}x_{3}\overline{x_{4}}+\overline{x_{1}}\overline{x_{2}}x_{3}x_{4}+\overline{x_{1}}x_{2}\overline{x_{3}}\overline{x_{4}}+\overline{x_{1}}x_{2}\overline{x_{3}}x_{4}+\overline{x_{1}}x_{2}x_{3}\overline{x_{4}}+\overline{x_{1}}x_{2}x_{3}x_{4}+x_{1}\overline{x_{2}}\overline{x_{3}}\overline{x_{4}}$
+
+$f_{2}(x_{1},x_{2},x_{3},x_{4})=\overline{x_{1}}\overline{x_{2}}\overline{x_{3}}x_{4}+\overline{x_{1}}\overline{x_{2}}x_{3}\overline{x_{4}}+\overline{x_{1}}\overline{x_{2}}x_{3}x_{4}+\overline{x_{1}}x_{2}\overline{x_{3}}\overline{x_{4}}+x_{1}\overline{\text{\ensuremath{x_{2}}}}\overline{x_{3}}x_{4}+x_{1}\overline{x_{2}}x_{3}\overline{x_{4}}+x_{1}\overline{x_{2}}x_{3}x_{4}+x_{1}x_{2}\overline{x_{3}}\overline{x_{4}}$
+
+$f_{3}(x_{1},x_{2},x_{3},x_{4})=\overline{x_{1}}\overline{x_{2}}\overline{x_{3}}x_{4}+\overline{x_{1}}\overline{x_{2}}x_{3}\overline{x_{4}}+\overline{x_{1}}x_{2}\overline{x_{3}}x_{4}+\overline{x_{1}}x_{2}x_{3}\overline{x_{4}}+x_{1}\overline{\text{\ensuremath{x_{2}}}}\overline{x_{3}}x_{4}+x_{1}\overline{x_{2}}x_{3}\overline{x_{4}}+x_{1}x_{2}\overline{\text{\ensuremath{x_{3}}}}x_{4}+x_{1}x_{2}x_{3}\overline{x_{4}}$
+
+$f_{4}(x_{1},x_{2},x_{3},x_{4})=\overline{x_{1}}\overline{x_{2}}\overline{x_{3}}x_{4}+\overline{x_{1}}\overline{x_{2}}x_{3}x_{4}+\overline{x_{1}}x_{2}\overline{x_{3}}x_{4}+\overline{x_{1}}x_{2}x_{3}x_{4}+x_{1}\overline{\text{\ensuremath{x_{2}}}}\overline{x_{3}}x_{4}+x_{1}\overline{x_{2}}x_{3}x_{4}+x_{1}x_{2}\overline{\text{\ensuremath{x_{3}}}}x_{4}+x_{1}x_{2}x_{3}x_{4}$
+
+~
+
+Finalmente, utilizando mapas de Karnaugh, se simplifican las ecuaciones.
+Los mapas de Karnaugh reducen la necesidad de hacer cálculos extensos
+para la simplificación de expresiones booleanas.
+
+El mapa de Karnaugh consiste en una representación bidimensional de
+la tabla de verdad de la función a simplificar. Puesto que la tabla
+de verdad de una función de N variables posee $2^{N}$ filas, el mapa
+K correspondiente debe poseer también $2^{N}$ cuadrados. Las variables
+de la expresión son ordenadas en función de su peso y siguiendo el
+código Gray, de manera que sólo una de las variables varía entre celdas
+adyacentes. La transferencia de los términos de la tabla de verdad
+al mapa de Karnaugh se realiza de forma directa, albergando un 0 ó
+un 1, dependiendo del valor que toma la función en cada fila.
+
+~
+
+En la Figura 1 podemos observar el mapa de Karnaugh de $f_{1}$ con
+cuatro conjuntos encerrados por distintos colores:
+
+\textbullet{} La función del conjunto amarillo se produce porque se
+observa que ninguna $x_{i}$ varia durante su conjunto. Como $x_{2},x_{3}$
+y $x_{4}$ no varian pero valen 0, entonces obtenemos como función
+del conjunto $x_{1}\overline{x_{2}}\overline{x_{3}}\overline{x_{4}}.$
+
+\textbullet{} La función del conjunto rojo se produce al observar
+que $x_{1}$ y $x_{2}$ no varian. Sin embargo, como $x_{1}$es cero,
+obtenemos como función del conjunto $\overline{x_{1}}x_{2}.$
+
+\textbullet{} En el caso del conjunto verde, $x_{1}$ y $x_{3}$ no
+varian pero $x_{1}$ es cero, por lo que resulta $\overline{x_{1}}x_{3}$.
+
+\textbullet{} Finalmente, en el conjunto azul, $x_{1}$ y $x_{4}$
+no varian pero $x_{1}$ es cero, por lo que resulta $\overline{x_{1}}x_{4}$.
+
+De esta manera,
+\begin{center}
+$f_{1}(x_{1},x_{2},x_{3},x_{4})=x_{1}\overline{x_{2}}\overline{x_{3}}\overline{x_{4}}+\overline{x_{1}}x_{2}+\overline{x_{1}}x_{3}+\overline{x_{1}}x_{4}=x_{1}\overline{x_{2}}\overline{x_{3}}\overline{x_{4}}+\overline{x_{1}}(x_{2}+x_{3}+x_{4})$
+\par\end{center}
+
+~
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.3]{\string"informe ej 4/Imagenes/karno1\string".png}
+\par\end{centering}
+\caption{Mapa de Karnaugh $f_{1}(x_{1},x_{2},x_{3},x_{4})$}
+
+\end{figure}
+
+\pagebreak{}
+
+El análisis para los siguientes casos se realiza de la misma manera,
+pero no será detallado. Solo se procederá a mostrar las funciones
+simplificadas y sus respectivos mapas de Karnaugh.
+
+~
+
+Para $f_{2}$,
+\begin{center}
+$f_{2}(x_{1},x_{2},x_{3},x_{4})=x_{2}\overline{x_{3}}\overline{x_{4}}+\overline{\text{\ensuremath{x_{2}}}}x_{3}+\overline{x_{2}}x_{4}=x_{2}\overline{x_{3}}\overline{x_{4}}+\overline{\text{\ensuremath{x_{2}}}}(x_{3}+x_{4})$
+\par\end{center}
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.3]{\string"informe ej 4/Imagenes/karno2\string".png}
+\par\end{centering}
+\caption{Mapa de Karnaugh $f_{2}(x_{1},x_{2},x_{3},x_{4})$}
+\end{figure}
+
+~
+
+~
+
+~
+
+Para $f_{3}$,
+\begin{center}
+$f_{3}(x_{1},x_{2},x_{3},x_{4})=\overline{x_{3}}x_{4}+x_{3}\overline{x_{4}}$
+\par\end{center}
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.3]{\string"informe ej 4/Imagenes/karno3\string".png}
+\par\end{centering}
+\caption{Mapa de Karnaugh $f_{3}(x_{1},x_{2},x_{3},x_{4})$}
+\end{figure}
+
+\pagebreak{}
+
+Para $f_{4}$,
+\begin{center}
+$f_{4}(x_{1},x_{2},x_{3},x_{4})=x_{4}$
+\par\end{center}
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.3]{\string"informe ej 4/Imagenes/karno4\string".png}
+\par\end{centering}
+\caption{Mapa de Karnaugh $f_{4}(x_{1},x_{2},x_{3},x_{4})$}
+
+\end{figure}
+
+El circuito lógico resultante se muestra en la Figura 5, donde los
+Xi corresponden a la entrada y los Fi a la salida del circuito. Respetando
+la consigna, solo se utilizaron compuestas NOT, AND y OR.
+
+~
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=1.1]{\string"informe ej 4/Imagenes/gateTOTAL\string".png}
+\par\end{centering}
+\caption{Circuito resultante realizado en draw.io}
+\end{figure}
+
+\selectlanguage{spanish}%
+
+\section{Ejercicio 5}
+
+Para la implementación del sumador de 2 numeros en BCD de un digito
+se observaron las diferencias entre la representación binaria común
+y la BCD para numeros del 0 al 19.
+
+\begin{figure}[H]
+\begin{centering}
+\begin{tabular}{ccc}
+\toprule 
+Decimal & Binario & BCD\tabularnewline
+\midrule
+\midrule 
+0 & 0000 0000 & 0000 0000\tabularnewline
+\midrule 
+1 & 0000 0001 & 0000 0001\tabularnewline
+\midrule 
+2 & 0000 0010 & 0000 0010\tabularnewline
+\midrule 
+3 & 0000 0011 & 0000 0011\tabularnewline
+\midrule 
+4 & 0000 0100 & 0000 0100\tabularnewline
+\midrule 
+5 & 0000 0101 & 0000 0101\tabularnewline
+\midrule 
+6 & 0000 0110 & 0000 0110\tabularnewline
+\midrule 
+7 & 0000 0111 & 0000 0111\tabularnewline
+\midrule 
+8 & 0000 1000 & 0000 1000\tabularnewline
+\midrule 
+9 & 0000 1001 & 0000 1001\tabularnewline
+\midrule 
+10 & 0000 1010 & 0001 0000\tabularnewline
+\midrule 
+11 & 0000 1011 & 0001 0001\tabularnewline
+\midrule 
+12 & 0000 1100 & 0001 0010\tabularnewline
+\midrule 
+13 & 0000 1101 & 0000 0011\tabularnewline
+\midrule 
+14 & 0000 1110 & 0001 0100\tabularnewline
+\midrule 
+15 & 0000 1111 & 0001 0101\tabularnewline
+\midrule 
+16 & 0001 0000 & 0001 0110\tabularnewline
+\midrule 
+17 & 0001 0001 & 0001 0111\tabularnewline
+\midrule 
+18 & 0001 0010 & 0001 1000\tabularnewline
+\midrule 
+19 & 0001 0011 & 00001 1001\tabularnewline
+\bottomrule
+\end{tabular}
+\par\end{centering}
+\caption{Comparativo Binario BCD}
+\end{figure}
+Se observó un exeso de 6 para todos los numeros mayores a 9, es decir,
+uno podria hacer la suma binaria y el resultado de 0 a 9 daría el
+resultado esperado en BCD pero para resultados de 10 a 19 es necesario
+un factor de correxión de +6. Para decidir si es mayor o menor a 9
+se puede hacer un diagrama logico en el cual si hay carry en la suma
+de los primeros cuatro bits, o esta encendido el MSB con el bit anterior,
+o el MSB con el segundo se puede afirmar que es mayor a 9. Se esquematizó
+el siguiente bloque comparador:
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.5]{\string"EJ 5 y 6/ComparadorMayor9\string".png}
+\par\end{centering}
+\caption{Comparador mayor a 9}
+\end{figure}
+
+Se llevo a cabo el diseño de un modulo ``Simple Adder'' el cual
+debería poder hacer la suma con carry de 2 bits y devolver el resultado
+y el carry de salida, para que luego bajo una conexión entre 4 de
+estos podamos obtener la suma en binario de dos numeros de 4 bits
+y un carry out de la suma total.
+
+\begin{figure}
+\begin{centering}
+\begin{tabular}{ccccc}
+\toprule 
+a & b & Ci & Result & Co\tabularnewline
+\midrule
+\midrule 
+0 & 0 & 0 & 0 & 0\tabularnewline
+\midrule 
+0 & 0 & 1 & 1 & 0\tabularnewline
+\midrule 
+0 & 1 & 0 & 1 & 0\tabularnewline
+\midrule 
+0 & 1 & 1 & 0 & 1\tabularnewline
+\midrule 
+1 & 0 & 0 & 1 & 0\tabularnewline
+\midrule 
+1 & 0 & 1 & 0 & 1\tabularnewline
+\midrule 
+1 & 1 & 0 & 0 & 1\tabularnewline
+\midrule 
+1 & 1 & 1 & 1 & 1\tabularnewline
+\bottomrule
+\end{tabular}
+\par\end{centering}
+\caption{Tabla Logica del Simple Adder}
+\end{figure}
+
+\begin{figure}
+\begin{centering}
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+\textbf{Ci\textbackslash ab} & \textbf{00} & \textbf{01} & \textbf{11} & \textbf{10}\tabularnewline
+\hline 
+\hline 
+\textbf{0} & 0 & 1 & 0 & 1\tabularnewline
+\hline 
+\textbf{1} & 1 & 0 & 1 & 0\tabularnewline
+\hline 
+\end{tabular}
+\par\end{centering}
+\caption{Mapa de Karnau para Result}
+\end{figure}
+
+\begin{figure}
+\begin{centering}
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+\textbf{Ci\textbackslash ab} & \textbf{00} & \textbf{01} & \textbf{11} & \textbf{10}\tabularnewline
+\hline 
+\hline 
+\textbf{0} & 0 & 0 & 1 & 0\tabularnewline
+\hline 
+\textbf{1} & 0 & 1 & 1 & 1\tabularnewline
+\hline 
+\end{tabular}
+\par\end{centering}
+\caption{Mapa de Karnau para Co}
+\end{figure}
+
+$Result=m_{1}+m_{2}+m_{4}+m_{7}=\bar{a}\bar{b}c+\overline{a}b\bar{c}+a\bar{b}\bar{c}+abc=\bar{a}(\bar{b}c+b\bar{c})+a(\bar{b}\bar{c}+bc)=\bar{a}(\bar{b}c+b\bar{c})+a\bar{(\bar{b}c+b\bar{c})}$,
+recordando que $XOR=A\bar{B}+B\bar{A}$.
+
+Calculo aux: $a(\bar{b}\bar{c}+bc)=\bar{\bar{a(\bar{b}\bar{c}+bc)}}=\bar{a+(\bar{\bar{b}\bar{c}+bc})}=\bar{a+(\bar{\bar{b}\bar{c}}\bar{bc})}=\bar{a+((b+c)(\bar{b}+\bar{c}))}=a\bar{(b\bar{c}+c\bar{b})}$.
+
+$Co=Cib+Cia+ab=ab+Ci(a+b)$.
+
+\begin{figure}[H]
+\centering{}\includegraphics[scale=0.5]{\string"EJ 5 y 6/Modulo Simple Adder\string".png}\caption{Modulo Simple Adder}
+\end{figure}
+
+Habiendo diseñado el módulo de Simple Adder se encadenaron 4 de estos
+para formar efectivamente el modulo Bit4Adder donde obtenemos un resultado
+final, un carry out y un overflow.
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.5]{\string"EJ 5 y 6/Bit4Adderjpg\string".jpg}
+\par\end{centering}
+\caption{Bit4Adder}
+\end{figure}
+
+Con los módulos armados anteriormente podemos hacer nuestra suma BCD
+donde nuestro comparador nos termina sumando 0110 a nuestra respuesta
+de la suma original si excede 1001. De esta manera obtenemos un numero
+de 8 bits representando hasta 19 en BCD.
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.5]{\string"EJ 5 y 6/SumaDeBCD\string".jpg}
+\par\end{centering}
+\caption{Bit4Adder}
+\end{figure}
+
+
+\section{ALU}
+
+Para el diseño de la ALU se reutilizaron los módulos vistos anteriormente
+para hacer el complemento a 2 y la suma de 4 bits. 
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.75]{\string"EJ 5 y 6/Res4Bit\string".jpg}
+\par\end{centering}
+\caption{Modulo Res4Bit}
+
+\selectlanguage{english}%
+\selectlanguage{spanish}%
+\end{figure}
+
+El diseño de la ALU esta basado en un operador de 3bits el cual define
+que operación y que CCR se muestra a la salida como se vera en el
+diagrama lógico a continuación. Se definieron las siguientes operaciones:
+
+operador=3'b001$\longrightarrow$Suma
+
+operador=3'b010$\longrightarrow$Resta
+
+operador=3'b011$\longrightarrow$ShiftLeft
+
+operador=3'b100$\longrightarrow$Complemento a 2
+
+operador=3'b101$\longrightarrow$Negado
+
+operador=3'b110$\longrightarrow$And
+
+operador=3'b101$\longrightarrow$Or
+
+operador=3'b111$\longrightarrow$Xor
+
+Se definieron las operaciones ShiftLeft, Complemento a 2 y negación
+para el primer número ingresado a la ALU. 
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.4]{\string"EJ 5 y 6/ALU\string".jpg}
+\par\end{centering}
+\caption{ALU}
+
+\selectlanguage{english}%
+\selectlanguage{spanish}%
+\end{figure}
+
+\begin{figure}[H]
+\begin{centering}
+\begin{tabular}{cccccc}
+\toprule 
+b0 & b1 & b2 & Output & Carry & Overflow\tabularnewline
+\midrule
+\midrule 
+0 & 0 & 0 & ResS & Carry & Overflow\tabularnewline
+\midrule 
+0 & 0 & 1 & ResR & Carry1 & Overflow1\tabularnewline
+\midrule 
+0 & 1 & 0 & ResL & 0 & 0\tabularnewline
+\midrule 
+0 & 1 & 1 & ResC & 0 & 0\tabularnewline
+\midrule 
+1 & 0 & 0 & ResN & 0 & 0\tabularnewline
+\midrule 
+1 & 0 & 1 & ResA & 0 & 0\tabularnewline
+\midrule 
+1 & 1 & 0 & ResO & 0 & 0\tabularnewline
+\midrule 
+1 & 1 & 1 & ResX & 0 & 0\tabularnewline
+\bottomrule
+\end{tabular}\caption{Tabla Lógica de la ALU}
+\par\end{centering}
+\selectlanguage{english}%
+\selectlanguage{spanish}%
+\end{figure}
+\selectlanguage{english}%
+
+\end{document}
